@@ -1,10 +1,10 @@
 import React, {useEffect, useState}  from 'react'
 
-import {apiTweetList} from './lookup'
+import {apiTweetFeed} from './lookup'
 
 import {Tweet} from './detail'
 
-export function TweetsList(props) {
+export function FeedList(props) {
     const [tweetsInit, setTweetsInit] = useState([])
     const [tweets, setTweets] = useState([])
     const [nextUrl, setNextUrl] = useState(null)
@@ -23,11 +23,9 @@ export function TweetsList(props) {
             setNextUrl(response.next)
             setTweetsInit(response.results)
             setTweetsDidSet(true)
-          } else {
-            alert("There was an error")
           }
         }
-        apiTweetList(props.username, handleTweetListLookup)
+        apiTweetFeed(handleTweetListLookup)
       }
     }, [tweetsInit, tweetsDidSet, setTweetsDidSet, props.username])
 
@@ -49,11 +47,9 @@ export function TweetsList(props) {
             const newTweets = [...tweets].concat(response.results)
             setTweetsInit(newTweets)
             setTweets(newTweets)
-          } else {
-            alert("There was an error")
           }
         }
-        apiTweetList(props.username, handleLoadNextResponse, nextUrl)
+        apiTweetFeed(handleLoadNextResponse, nextUrl)
       }
     }
 
